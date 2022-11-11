@@ -7,15 +7,16 @@ export default function EditUser () {
   const data = useLocation()
   const navigate = useNavigate()
   //   console.log('data :>> ', data.state)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [password, setPassword] = useState('')
-  const [jobTitle, setJobTitle] = useState('')
-  const [country, setCountry] = useState('')
-  const [address, setAddress] = useState('')
-  const [bio, setBio] = useState('')
-  const [emailID, setEmailID] = useState('')
-  const [mobileNumber, setMobileNumber] = useState('')
+  const [firstName, setFirstName] = useState(data.state.firstName)
+  const [lastName, setLastName] = useState(data.state.lastName)
+  const [password, setPassword] = useState(data.state.password)
+  const [jobTitle, setJobTitle] = useState(data.state.jobTitle)
+  const [country, setCountry] = useState(data.state.country)
+  const [address, setAddress] = useState(data.state.address)
+  const [bio, setBio] = useState(data.state.bio)
+  const [emailID, setEmailID] = useState(data.state.emailID)
+  const [mobileNumber, setMobileNumber] = useState(data.state.mobileNumber)
+  const [status, setStatus] = useState(data.state.status)
 
   const handleEditButton = (e, id) => {
     axios.put(`https://6364ac837b209ece0f4b06db.mockapi.io/employee-list/${id}`, {
@@ -24,6 +25,7 @@ export default function EditUser () {
       .then((res) => {
         console.log('res.data', res.data)
       })
+      .then(() => navigate('/user'))
       .catch((err) => {
         console.log('err :>> ', err)
       })
@@ -40,10 +42,10 @@ export default function EditUser () {
                 <label>Name</label>
               </td>
               <td>
-                <input type='text' name='firstName' id='firstName' value={data.state.firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <input type='text' name='firstName' id='firstName' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
               </td>
               <td>
-                <input type='text' name='lastName' id='lastName' value={data.state.lastName} onChange={(e) => setLastName(e.target.value)} />
+                <input type='text' name='lastName' id='lastName' value={lastName} onChange={(e) => setLastName(e.target.value)} />
               </td>
             </tr>
             <tr>
@@ -51,7 +53,7 @@ export default function EditUser () {
                 <label>Password</label>
               </td>
               <td colSpan={2}>
-                <input type='text' name='password' id='password' value={data.state.password} onChange={(e) => setPassword(e.target.value)} />
+                <input type='text' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
               </td>
             </tr>
             {/* <tr>
@@ -70,7 +72,7 @@ export default function EditUser () {
                 <label>Job Title</label>
               </td>
               <td colSpan={2}>
-                <input type='text' name='jobTtile' id='jobTtile' value={data.state.jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
+                <input type='text' name='jobTtile' id='jobTtile' value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
               </td>
             </tr>
             <tr>
@@ -78,7 +80,7 @@ export default function EditUser () {
                 <label>Country</label>
               </td>
               <td colSpan={2}>
-                <input type='text' name='country' id='country' value={data.state.country} onChange={(e) => setCountry(e.target.value)} />
+                <input type='text' name='country' id='country' value={country} onChange={(e) => setCountry(e.target.value)} />
               </td>
             </tr>
             <tr>
@@ -86,7 +88,7 @@ export default function EditUser () {
                 <label>Address</label>
               </td>
               <td colSpan={2}>
-                <textarea rows={5} value={data.state.address} onChange={(e) => setAddress(e.target.value)}></textarea>
+                <textarea rows={5} value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
               </td>
             </tr>
             <tr>
@@ -94,7 +96,7 @@ export default function EditUser () {
                 <label>Bio</label>
               </td>
               <td colSpan={2}>
-                <input type='text' name='bio' id='bio' value={data.state.bio} onChange={(e) => setBio(e.target.value)} />
+                <input type='text' name='bio' id='bio' value={bio} onChange={(e) => setBio(e.target.value)} />
               </td>
             </tr>
             {/* <tr>
@@ -110,7 +112,7 @@ export default function EditUser () {
                 <label>Email ID</label>
               </td>
               <td colSpan={2}>
-                <input type='text' name='emailID' id='emailID' value={data.state.emailID} onChange={(e) => setEmailID(e.target.value)} />
+                <input type='text' name='emailID' id='emailID' value={emailID} onChange={(e) => setEmailID(e.target.value)} />
               </td>
             </tr>
             <tr>
@@ -118,7 +120,15 @@ export default function EditUser () {
                 <label>Mobile Number</label>
               </td>
               <td colSpan={2}>
-                <input type='text' name='mobileNumber' id='mobileNumber' value={data.state.mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} />
+                <input type='text' name='mobileNumber' id='mobileNumber' value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label>Status</label>
+              </td>
+              <td colSpan={2}>
+                <input type='text' name='mobileNumber' id='mobileNumber' value={status} onChange={(e) => setStatus(e.target.value)} />
               </td>
             </tr>
             <tr>

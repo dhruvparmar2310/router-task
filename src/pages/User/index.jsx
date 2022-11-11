@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom'
 export default function User () {
   const [getApiData, setApiData] = useState([])
   const [sortOrder, setSortOrder] = useState('asc')
+
+  const [searchData, setSearchData] = useState('')
+  const [tempData, setTempData] = useState(getApiData)
+
   const navigate = useNavigate()
   const getData = () => {
     axios.get('https://6364ac837b209ece0f4b06db.mockapi.io/employee-list')
@@ -38,7 +42,7 @@ export default function User () {
 
   const handleEditButton = (e, data, id) => {
     // console.log('data :>> ', data)
-    navigate('/edit-user', { state: data })
+    navigate('/user/edit-user', { state: data })
   }
 
   const handleSort = (data) => {
@@ -61,11 +65,28 @@ export default function User () {
     }
   }
 
+  const handleAddUser = (e) => {
+    navigate('/user/add-user')
+  }
+
+  const handleSearch = (e) => {
+    setTempData(getApiData.filter((value) => {
+      if (searchData === '') {
+        return value
+      } else if (value.brand.includes(searchData)) {
+        return value
+      } else { return null }
+    }))
+    console.log('tempData :>> ', tempData)
+  }
+
   return (
     <>
     <Header /><hr/>
 
-    <input type="text" id='searchbar' onChange={(e) => setApiData(e.target.value)} placeholder="Search bar" />
+    <input type="text" id='searchbar' onChange={(e) => setSearchData(e.target.value)} placeholder="Search bar" />
+    <button onClick={(e) => handleSearch(e)}>Search</button>
+    <button onClick={(e) => handleAddUser(e)}>Add User</button>
     <div className='user'>
       <table>
         <thead>
@@ -99,7 +120,7 @@ export default function User () {
                 <td>{data.bio}</td>
                 <td>{data.emailID}</td>
                 <td>{data.mobileNumber}</td>
-                <td>{data.status}</td>
+                <td>{data.status ? 'true' : 'false'}</td>
                 <td>
                   <img src={data.profileImg} />
                 </td>

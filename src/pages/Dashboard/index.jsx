@@ -11,7 +11,7 @@ export default function Dashboard () {
     axios.get('https://6364ac837b209ece0f4b06db.mockapi.io/employee-list')
       .then((res) => {
         setData(res.data)
-        console.log(' Get Data from Api :>> ', res.data)
+        console.log('Get Data from Api :>> ', res.data)
       })
       .catch((err) => {
         console.log('err', err)
@@ -22,14 +22,20 @@ export default function Dashboard () {
     getData()
   }, [])
 
+  const male = data.filter((item) => item.gender === 'Male')
+  const countMale = male.length
+
+  const female = data.filter((item) => item.gender === 'Female')
+  const countFemale = female.length
+
   return (
     <div className='dashboard'>
       <Header /><hr/>
       <div className='statistic'>
         <p>Statistic</p>
         <p>Total Users : {users}</p>
-        <p>Total Males : </p>
-        <p>Total Females : </p>
+        <p>Total Males : {countMale}</p>
+        <p>Total Females : {countFemale}</p>
       </div>
     </div>
   )

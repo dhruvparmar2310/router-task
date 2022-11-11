@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import './style.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Home from '../Home'
 
 export default function Login () {
   const navigate = useNavigate()
@@ -16,6 +17,10 @@ export default function Login () {
       .catch((err) => {
         console.log('err', err)
       })
+    const login = sessionStorage.getItem('email')
+    if (login) {
+      navigate('/')
+    }
   }, [])
 
   const [userLoginData, setUserLoginData] = useState({
@@ -53,12 +58,14 @@ export default function Login () {
           alert('Invalid Email or Passwrord.')
         }
       }
+      navigate('/')
     },
     [userLoginData, setLoginDetails]
   )
 
   return (
     <div className='login container'>
+      <Home />
       <form>
         <h1>Login Page</h1>
         <div className='row'>

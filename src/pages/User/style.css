@@ -1,0 +1,50 @@
+.user{
+    margin: 50px auto;
+    width: 95%;
+    border: 1px solid #000;
+}
+
+.user table tr td, th{
+    border: 1px solid #000;
+    font-size: 14px;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+} 
+ul li{
+    text-align: center;
+}
+ul a{
+    text-decoration: none;
+    color: #000;
+    margin: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+ul a:hover{
+    color: #fff;
+}
+
+#searchbar{
+    width: 20%;
+}
+
+.sort{
+    margin: 5px;
+    background-color: #ffb62f;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user img{
+    width: 40%;
+}

@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 export default function User () {
   const [getApiData, setApiData] = useState([])
-  const [sortOrder, setSortOrder] = useState('asc')
-
+  const [searchItem, setSearchItem] = useState('')
   const [searchData, setSearchData] = useState('')
-  const [tempData, setTempData] = useState(getApiData)
-
+  const [sortOrder, setSortOrder] = useState('asc')
+  const [filterData, setFilterData] = useState('all')
   const navigate = useNavigate()
+
   const getData = () => {
     axios.get('https://6364ac837b209ece0f4b06db.mockapi.io/employee-list')
       .then((res) => {
@@ -23,8 +23,16 @@ export default function User () {
       })
   }
   useEffect(() => {
-    getData()
-  }, [])
+    if (filterData === true) {
+      const filter = (data) => data.filter((item) => item.gender === 'Male')
+      setApiData(filter)
+    } else if (filterData === false) {
+      const filter = (data) => data.filter((item) => item.gender === 'Female')
+      setApiData(filter)
+    } else {
+      getData()
+    }
+  }, [filterData])
 
   const handleDeleteButton = (e, id) => {
     console.log('id', id)
@@ -69,24 +77,42 @@ export default function User () {
     navigate('/user/add-user')
   }
 
+  // logic for search
   const handleSearch = (e) => {
-    setTempData(getApiData.filter((value) => {
-      if (searchData === '') {
-        return value
-      } else if (value.brand.includes(searchData)) {
-        return value
-      } else { return null }
-    }))
-    console.log('tempData :>> ', tempData)
+    setSearchItem('')
+    const lowerCase = e.target.value.toLowerCase()
+    setSearchData(lowerCase)
   }
+
+  const filteredData = getApiData.filter((object) => {
+    return object.firstName.toLowerCase().includes(searchItem)
+  })
+
+  const handleSearchButton = (e) => {
+    setSearchItem(searchData)
+  }
+
+  // logic for filter
+  const handleFilter = (e) => {
+    const { value } = e.target
+    console.log('value :>> ', value);
+    (value === 'true') ? setFilterData(true) : value === 'false' ? setFilterData(false) : setFilterData('all')
+  }
+  console.log('filterData :>> ', filterData)
 
   return (
     <>
     <Header /><hr/>
 
-    <input type="text" id='searchbar' onChange={(e) => setSearchData(e.target.value)} placeholder="Search bar" />
-    <button onClick={(e) => handleSearch(e)}>Search</button>
-    <button onClick={(e) => handleAddUser(e)}>Add User</button>
+    <input type="text" id='searchbar' onChange={(e) => handleSearch(e)} placeholder="Search bar" />
+    <button onClick={(e) => handleSearchButton(e)}>Search</button>
+    <button onClick={(e) => handleAddUser(e)}>Add User</button><br/><br/>
+    <label style={{ margin: '10px' }}>Filter</label>
+    <select value={filterData} onChange={(e) => handleFilter(e)}>
+      <option value={'all'}>All</option>
+      <option value={true}>Male</option>
+      <option value={false}>Female</option>
+    </select>
     <div className='user'>
       <table>
         <thead>
@@ -107,7 +133,7 @@ export default function User () {
           </tr>
         </thead>
         <tbody>
-        {getApiData.map((data, index) => {
+        {filteredData.map((data, index) => {
           return (
             <React.Fragment key={index}>
               <tr>

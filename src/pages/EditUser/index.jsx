@@ -20,7 +20,7 @@ export default function EditUser () {
 
   const handleEditButton = (e, id) => {
     axios.put(`https://6364ac837b209ece0f4b06db.mockapi.io/employee-list/${id}`, {
-      firstName, lastName, password, jobTitle, country, address, bio, emailID, mobileNumber
+      firstName, lastName, password, jobTitle, country, address, bio, emailID, mobileNumber, status
     })
       .then((res) => {
         console.log('res.data', res.data)
@@ -56,17 +56,6 @@ export default function EditUser () {
                 <input type='text' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
               </td>
             </tr>
-            {/* <tr>
-              <td>
-                <label>Gender</label>
-              </td>
-              <td>
-                <input type='radio' name='gender' id='gender' value={data.state.gender} /> Male
-              </td>
-              <td>
-                <input type='radio' name='gender' id='gender' value={data.state.gender} /> Female
-              </td>
-            </tr> */}
             <tr>
               <td>
                 <label>Job Title</label>
@@ -99,14 +88,6 @@ export default function EditUser () {
                 <input type='text' name='bio' id='bio' value={bio} onChange={(e) => setBio(e.target.value)} />
               </td>
             </tr>
-            {/* <tr>
-              <td>
-                <label>Profile</label>
-              </td>
-              <td colSpan={2}>
-                <input type='file' name='profileImg' id='profileImg' />
-              </td>
-            </tr> */}
             <tr>
               <td>
                 <label>Email ID</label>
